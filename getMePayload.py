@@ -4,27 +4,43 @@ from bs4 import BeautifulSoup
 from urllib.parse import unquote
 
 
-url =  "https://github.com/swisskyrepo/PayloadsAllTheThings"
-r = requests.get(url)
-soup = BeautifulSoup(r.content, 'html.parser')
+
+try:
+    if os.path.exists("source/homepage.html"):
+        with open("source/homepage.html", "r") as f:
+            html = f.read()
+            print(html)
+            soup = BeautifulSoup(html, "html.parser")
+   
+    else:
+        url =  "https://github.com/swisskyrepo/PayloadsAllTheThings"
+        r = requests.get(url)
+        os.makedirs('source', exist_ok=True)
+        soup = BeautifulSoup(r.content, 'html.parser')
+        print(soup)
+        with open('source/homepage.html', 'w', encoding='utf-8') as f_out:
+            f_out.write(str(soup))
+except:
+    print("Error: Could not connect to github")
+    exit()
 
 # create a directory name source with OS
-os.makedirs('source', exist_ok=True)
 
-with open('source/homepage.html', 'w', encoding='utf-8') as f_out:
-    f_out.write(soup.prettify())
+
 
 ancs = soup.find_all('a')
+# print(ancs)
 
 filters = []
 for i in range(len(ancs)):
 
     if '/swisskyrepo/PayloadsAllTheThings/tree/master/' in ancs[i].get('href'):
             filters.append(ancs[i])
-
+# print(filters)
 dic = {}
 for i in range(len(filters)):
     dic[filters[i].text] = f"https://raw.githubusercontent.com{unquote(filters[i].get('href'))}"
+
 
 dic.pop('.github')
 print(dic)
