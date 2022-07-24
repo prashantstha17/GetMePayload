@@ -2,6 +2,7 @@ import requests
 import os
 from bs4 import BeautifulSoup
 from urllib.parse import unquote
+import wget
 
 
 
@@ -24,6 +25,24 @@ except:
     print("Error: Could not connect to github")
     exit()
 
+def download():
+    for i in dic:
+        # download_progress.set(value)
+        url = dic[i].replace('/tree','')
+        title = dic[i].split('/')[-1]
+        title = title.replace(' ', '_')
+        filepath = f'source/{title}_README.md'
+        try:
+            # print(f"{url}/README.md")
+            if not os.path.exists(filepath):
+                wget.download(f"{url}/README.md", out=filepath)
+        except:
+            try:
+                if not os.path.exists(filepath):
+                    wget.download(f"{url}/readme.md", out=filepath)
+            except:
+                pass
+
 # create a directory name source with OS
 
 
@@ -44,3 +63,4 @@ for i in range(len(filters)):
 
 dic.pop('.github')
 print(dic)
+download()
