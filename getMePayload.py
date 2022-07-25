@@ -1,4 +1,3 @@
-from keyword import kwlist
 from tkinter import *
 from tkinter import ttk, messagebox
 from tkinter import font
@@ -161,14 +160,14 @@ def getPayload(value):
             download_button.destroy() # clears the download/check button
             os.system(f'md2html source/{md2HtmlFile}_README.md > source/{md2HtmlFile}.html')
             with open(f'source/{md2HtmlFile}.html') as f:
-                frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true")
+                frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true",fontscale=1)
                 x = f.read()
                 frame.set_content(x)
                 frame.grid(row=0, column=1, padx=10, pady=10)
         else:
             download_button.destroy() # clears the download/check button
             with open(f'source/{md2HtmlFile}.html') as f:
-                frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true")
+                frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true", fontscale=1)
                 x = f.read()
                 frame.set_content(x)
                 frame.grid(row=0, column=1, padx=10, pady=10)
