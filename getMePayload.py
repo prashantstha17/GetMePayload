@@ -5,11 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import unquote
 import wget
+import os
 from tkinterhtml import HtmlFrame
 
 
 app = CTk()
-app.title("GET Me A Payload")
 app.set_appearance_mode("system")
 app.geometry("1100x880")
 app.title("GetMePayload | Author: @PrashantShrestha")
@@ -57,10 +57,6 @@ except:
     print('[-] Error: Requires internet connection for the first time.')
     exit()
 
-
-
-# create a directory name source with OS
-os.makedirs('source', exist_ok=True)
 
 
 ancs = soup.find_all('a')
@@ -143,6 +139,12 @@ download_button = CTkButton(myframe2,
                             text_font=("Times", "12", "bold"))
 download_button.grid(row=1, column=0, pady=100, padx=100, sticky="nesw")
 
+info_label = CTkLabel(myframe2, 
+                    text=f"Info: You only need to click this button once until the download completes.\n Next time you can get payload offline!",
+                    text_font=("Times", "12", "bold"),
+                    fg_color="lightgreen")
+info_label.grid(row=5, column=0, pady=100, padx=100, sticky="nesw")
+
 
 
 def getPayload(value):
@@ -154,6 +156,7 @@ def getPayload(value):
 
         elif not os.path.exists(f"source/{md2HtmlFile}.html"):
             download_button.destroy() # clears the download/check button
+            info_label.destroy() # clears the info label
             os.system(f'md2html source/{md2HtmlFile}_README.md > source/{md2HtmlFile}.html')
             with open(f'source/{md2HtmlFile}.html') as f:
                 frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true",fontscale=1)
@@ -162,6 +165,7 @@ def getPayload(value):
                 frame.grid(row=0, column=1, padx=10, pady=10)
         else:
             download_button.destroy() # clears the download/check button
+            info_label.destroy() # clears the info label
             with open(f'source/{md2HtmlFile}.html') as f:
                 frame = HtmlFrame(myframe2, horizontal_scrollbar="true", vertical_scrollbar="true", fontscale=1)
                 x = f.read()
