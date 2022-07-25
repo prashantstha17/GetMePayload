@@ -1,0 +1,7 @@
+requests
+tkinter
+customtkinter
+bs4
+wget
+tkinterhtml
+md2html
