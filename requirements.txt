@@ -1,7 +1,7 @@
 requests
-tkinter
 customtkinter
+markdown2
 bs4
 wget
 tkinterhtml
-md2html
+
