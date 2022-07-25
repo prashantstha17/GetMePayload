@@ -1,13 +1,10 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from tkinter import font
 from customtkinter import *
 import requests
 from bs4 import BeautifulSoup
-import os
 from urllib.parse import unquote
 import wget
-from markdown2 import Markdown
 from tkinterhtml import HtmlFrame
 
 
@@ -17,10 +14,9 @@ app.set_appearance_mode("system")
 app.geometry("1100x880")
 app.title("GetMePayload | Author: @PrashantShrestha")
 app.resizable(False, False)
-if os.name == "posix":
-    app.iconbitmap(r'@assets/baseIcon.xbm')
-else:
-    app.iconbitmap('assets/baseIcon.ico')
+
+app.iconbitmap(r'@assets/baseIcon.xbm')
+
 
 
 wrapper1 = LabelFrame(app)
