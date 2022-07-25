@@ -1,5 +1,7 @@
+from keyword import kwlist
 from tkinter import *
 from tkinter import ttk, messagebox
+from tkinter import font
 from customtkinter import *
 import requests
 from bs4 import BeautifulSoup
@@ -12,15 +14,21 @@ from tkinterhtml import HtmlFrame
 
 app = CTk()
 app.title("GET Me A Payload")
-app.set_appearance_mode("dark")
-app.geometry("1000x880")
+app.set_appearance_mode("system")
+app.geometry("1100x880")
 app.title("GetMePayload | Author: @PrashantShrestha")
+app.resizable(False, False)
+if os.name == "posix":
+    app.iconbitmap(r'@assets/baseIcon.xbm')
+else:
+    app.iconbitmap('assets/baseIcon.ico')
+
 
 wrapper1 = LabelFrame(app)
 wrapper1.grid(row=0, column=0, padx=10, pady=10)
 
 
-mycanvas = CTkCanvas(wrapper1, width=200, height=860)
+mycanvas = CTkCanvas(wrapper1, width=220, height=860)
 mycanvas.grid(row=0, column=0, padx=10, pady=10)
 
 yscrollbar = ttk.Scrollbar(wrapper1, orient="vertical", command=mycanvas.yview)
@@ -76,11 +84,17 @@ dic.pop('.github')
 
 # print(dic)
 
-for i in dic:
-    k = i
-    i = i.replace(' ','_')
-    globals () ['button_%s' % i] = CTkButton(myframe, text=k, command=lambda j=i:getPayload(j))
-    dynamic_button = eval(['button_%s' % i][0])
+for key in dic:
+    k = key
+    key = key.replace(' ','_')
+    globals () ['button_%s' % key] = CTkButton(myframe, 
+                                                text=k, 
+                                                command=lambda j=key:getPayload(j),
+                                                width=190, 
+                                                height=40,
+                                                hover_color="orange",
+                                                text_font=("Times", "10", "bold"))
+    dynamic_button = eval(['button_%s' % key][0])
     dynamic_button.grid(pady=10)
 
 
@@ -89,8 +103,8 @@ wrapper2.grid(row=0, column=1, padx=10, pady=10)
 
 
 
-mycanvas2 = CTkCanvas(wrapper2, width=640, height=850)
-mycanvas2.grid(row=0, column=0, padx=10, pady=10)
+mycanvas2 = CTkCanvas(wrapper2, width=735, height=650)
+mycanvas2.grid(row=0, column=0)
 
 yscrollbar2 = ttk.Scrollbar(wrapper2, orient="vertical", command=mycanvas2.yview)
 yscrollbar2.grid(row=0, column=1, padx=10, pady=10, sticky="ns")
@@ -100,7 +114,7 @@ mycanvas2.bind('<Configure>', lambda e: mycanvas2.configure(scrollregion = mycan
 
 
 
-myframe2 = CTkFrame(mycanvas2, height=850)
+myframe2 = CTkFrame(mycanvas2)
 mycanvas2.create_window((0, 0), window=myframe2, anchor="nw")
 
 
@@ -120,12 +134,18 @@ def download():
                 if not os.path.exists(filepath):
                     wget.download(f"{url}/readme.md", out=filepath)
             except:
-                pass
                 print(dynamic_button)
                 dynamic_button.destroy()
-                
+
     message = messagebox.showinfo("Download Status", "Download/Check Complete")   
-download_button = CTkButton(myframe2, text='Download/Check Files', command=download)
+
+download_button = CTkButton(myframe2, 
+                            text='Download/Check Files', 
+                            command=download,
+                            width=300, 
+                            height=150,
+                            hover_color="lightgreen",
+                            text_font=("Times", "12", "bold"))
 download_button.grid(row=1, column=0, pady=100, padx=100, sticky="nesw")
 
 
@@ -136,7 +156,6 @@ def getPayload(value):
     try:
         if not os.path.exists(f"source/{md2HtmlFile}_README.md"):
             message = messagebox.showerror("Error", "Download the file first!")
-
 
         elif not os.path.exists(f"source/{md2HtmlFile}.html"):
             download_button.destroy() # clears the download/check button
