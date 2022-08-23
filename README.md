@@ -35,17 +35,6 @@ The tools I have used for this project are as shown below:
 <br>
 <br>
 
-# Links
-
-The links you can go through:
-
-- Repository: https://github.com/softwarica-github/coursework1-prashantstha17
-- Youtube video: https://youtu.be/8ki22gB29P0
-
-
-<br>
-<br>
-
 
 
 
